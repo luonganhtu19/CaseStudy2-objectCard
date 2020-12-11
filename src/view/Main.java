@@ -29,7 +29,9 @@ public class Main {
                 case 1:
                     Player player=accountController.login(account);
                     if(account.getIdAccount()==1) menuAdmin(account);
-                    else menuPlayer(player,account);
+                    else if (player.getIdAccount()==-1){
+                        break;
+                    }else menuPlayer(player,account);
                     break;
                 default:
                     System.out.println("");

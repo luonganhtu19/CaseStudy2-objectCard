@@ -35,14 +35,17 @@ public class AccountController {
         accountUser.setUserName(accountName);
         accountUser.setPassword(accountPassword);
         boolean check = checkAccountExist(accountUser);
+        Player player = new Player();
+        player.setIdAccount(-1);
         if (check) {
             displayConsole.displayAfterChoice("\t\t\t Welcome " + accountName);
-            Player player = new Player();
+            player.setIdAccount(accountUser.getIdAccount());
             return player;
         } else {
             displayConsole.displayAfterChoice("\t Password or Username is wrong");
+            return player;
         }
-        return null;
+
     }
 
     private boolean checkAccountExist(Account account) throws IOException {
