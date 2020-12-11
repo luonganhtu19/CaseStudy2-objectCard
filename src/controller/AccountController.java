@@ -149,10 +149,12 @@ public class AccountController {
             }
             check = false;
         } while (check);
+        if (indexAccount==0) System.out.println("admin not name change");
         Account objAccount = (Account) listAccount.get(indexAccount);
         objAccount.setUserName(nameAccount);
         ioFile.writerFile(path, listAccount, ENUM_STATIC.getSTRING_HEADER_Account());
         displayConsole.displayAfterChoice("Change name account success");
+
     }
 
     public void editPassAccount(int indexAccount) throws IOException {

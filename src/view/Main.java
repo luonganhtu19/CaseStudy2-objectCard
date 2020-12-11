@@ -167,7 +167,6 @@ public class Main {
         switch (choice){
             case 0:
                 displayConsole.displayAfterChoice("Menu player");
-                menuPlayer(player,account);
                 return;
             case 1:
                 accountController.editNamePlayer(indexAccount);
@@ -177,10 +176,14 @@ public class Main {
                 break;
             case 3:
                 accountController.editNameAccount(indexAccount);
-                break;
+                displayConsole.displayAfterChoice("Please try again login");
+                return;
             case 4:
                 accountController.editPassAccount(indexAccount);
+                displayConsole.displayAfterChoice("Please try again login");
                 break;
+            default:
+                System.out.println("Please try again.");
         }
         editPlayer(player,account);
     }
