@@ -32,7 +32,9 @@ public class Main {
                     else menuPlayer(player,account);
                     break;
                 default:
-                    System.out.println("please try again ");
+                    System.out.println("");
+                    System.out.println(" Please try again ");
+                    System.out.println("");
             }
         }
     }
@@ -68,7 +70,16 @@ public class Main {
                 break;
             case 3:
                 accountController.displayAllAccount();
-                int IdAccount= InputConsole.getIntValue("Id Account is change: ");
+                boolean check=true;
+                int IdAccount=0;
+                while (check) {
+                    IdAccount = InputConsole.getIntValue("Id Account is change: ")-1;
+                    if (IdAccount<-1|| IdAccount>=accountController.sizeList()) {
+                        InputConsole.clearConsole();
+                        displayConsole.displayAfterChoice("Error, because not exist id");
+                    }
+                    check=false;
+                }
                 editAccount(IdAccount);
                 break;
             case 4:
@@ -115,9 +126,10 @@ public class Main {
                 System.out.println(" Please choice program again");
                 editAccount(IdAccount);
         }
+        editAccount(IdAccount);
     }
 
-    private static void menuPlayer(Player player, Account account){
+    private static void menuPlayer(Player player, Account account) throws IOException {
         System.out.println("Menu game: ");
         System.out.println("1. Display profile");
         System.out.println("2. Edit profile");
@@ -132,14 +144,42 @@ public class Main {
                 accountController.infoPlayer(account);
                 break;
             case 2:
-                editPlayer();
+                editPlayer(player,account);
                 break;
             default:
-                System.out.println("Please choice again ");
+                System.out.println("");
+                System.out.println(" Please choice again ");
+                System.out.println("");
         }
         menuPlayer(player,account);
     }
-    private static void editPlayer(){
-
+    private static void editPlayer( Player player, Account account) throws IOException {
+        displayConsole.displayAfterChoice("Menu edit player");
+        System.out.println("1. Edit Name");
+        System.out.println("2. Edit Address");
+        System.out.println("3. Edit Name Account");
+        System.out.println("4. Edit password");
+        System.out.println("0. Exit edit program");
+        int choice=InputConsole.getIntValue("Choice menu: ");
+        int indexAccount=account.getIdAccount()-1;
+        switch (choice){
+            case 0:
+                displayConsole.displayAfterChoice("Menu player");
+                menuPlayer(player,account);
+                return;
+            case 1:
+                accountController.editNamePlayer(indexAccount);
+                break;
+            case 2:
+                accountController.editAddressPlayer(indexAccount);
+                break;
+            case 3:
+                accountController.editNameAccount(indexAccount);
+                break;
+            case 4:
+                accountController.editPassAccount(indexAccount);
+                break;
+        }
+        editPlayer(player,account);
     }
 }

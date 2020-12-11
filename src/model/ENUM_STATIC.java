@@ -15,7 +15,7 @@ public final class   ENUM_STATIC {
     private final static String STRING_HEADER_Player="IdPlayer,NamePlayer,Address,PointGame,IdAccount";
     private final static String STRING_LINE_Account="--------------------------------------------------------------------------------------------------------";
     private final static String STRING_LINE= "---------------------------------------------";
-    private final static String STRING_LINE_Player="-----------------------------------------------------------";
+    private final static String STRING_LINE_Player="--------------------------------------------------------------------------------------------";
 
 
     public static Scanner getINPUT() {

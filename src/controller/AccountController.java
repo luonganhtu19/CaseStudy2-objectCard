@@ -111,6 +111,11 @@ public class AccountController {
 
     public void deleteAccount() throws IOException {
         int idAccount = InputConsole.getIntValue(" Input IDAccount: ");
+        if (idAccount<0||idAccount>listPlayer.size()){
+            InputConsole.clearConsole();
+            displayConsole.displayAfterChoice("Error, id not exist ");
+            deleteAccount();
+        }
         if (idAccount == 1) displayConsole.displayAfterChoice("Error", "Fail " +
                 "because you cannot delete account admin ");
         else {
@@ -130,7 +135,7 @@ public class AccountController {
         }
     }
 
-    public void editNameAccount(int IdAccount) throws IOException {
+    public void editNameAccount(int indexAccount) throws IOException {
         String nameAccount = "";
         boolean check = true;
         do {
@@ -141,33 +146,54 @@ public class AccountController {
             }
             check = false;
         } while (check);
-        Account objAccount = (Account) listAccount.get(IdAccount);
+        Account objAccount = (Account) listAccount.get(indexAccount);
         objAccount.setUserName(nameAccount);
         ioFile.writerFile(path, listAccount, ENUM_STATIC.getSTRING_HEADER_Account());
         displayConsole.displayAfterChoice("Change name account success");
     }
 
-    public void editPassAccount(int IdAccount) throws IOException {
+    public void editPassAccount(int indexAccount) throws IOException {
         String passwordNew = InputConsole.getStringValue("Input new password: ");
-        Account objAccount = (Account) listAccount.get(IdAccount);
+        Account objAccount = (Account) listAccount.get(indexAccount);
         objAccount.setPassword(passwordNew);
         ioFile.writerFile(path, listAccount, ENUM_STATIC.getSTRING_HEADER_Account());
         displayConsole.displayAfterChoice("Reset password account success");
     }
 
-    public void editState(int IdAccount) throws IOException {
+    public void editState(int indexAccount) throws IOException {
         String passwordNew = InputConsole.getStringValue(" Edit state password: ");
-        Account objAccount = (Account) listAccount.get(IdAccount);
+        Account objAccount = (Account) listAccount.get(indexAccount);
         objAccount.setPassword(passwordNew);
         ioFile.writerFile(path, listAccount, ENUM_STATIC.getSTRING_HEADER_Account());
         displayConsole.displayAfterChoice("Reset state account success");
     }
 
-    public void editNamePlayer(int idAccount){}
+    public void editNamePlayer(int indexAccount) throws IOException {
+        InputConsole.clearConsole();
+        String namePlayer=InputConsole.getStringValue("Name player: ");
+        Player player=(Player) listPlayer.get(indexAccount);
+        player.setNamePlayer(namePlayer);
+        ioFile.writerFile(pathPlayer,listPlayer,ENUM_STATIC.getSTRING_HEADER_Player());
+        displayConsole.displayAfterChoice("Change name success");
+    }
 
-    public void editAddressPlayer(int idAccount){}
+    public void editAddressPlayer(int indexAccount) throws IOException{
+        InputConsole.clearConsole();
+        String addressPlayer=InputConsole.getStringValue("Address player: ");
+        Player player=(Player) listPlayer.get(indexAccount);
+        player.setAddress(addressPlayer);
+        ioFile.writerFile(pathPlayer,listPlayer,ENUM_STATIC.getSTRING_HEADER_Player());
+        displayConsole.displayAfterChoice("Change name success");
+    }
 
-    public void editPointPlayer(int idAccount){}
+    public void editPointPlayer(int indexAccount) throws IOException {
+        InputConsole.clearConsole();
+        int point=InputConsole.getIntValue("Point of player: ");
+        Player player=(Player) listPlayer.get(indexAccount);
+        player.setPointGame(point);
+        ioFile.writerFile(pathPlayer,listPlayer,ENUM_STATIC.getSTRING_HEADER_Player());
+        displayConsole.displayAfterChoice("Change name success");
+    }
 
     public void displayAllAccount() throws IOException {
         displayConsole.displayAllAccount(listAccount,listPlayer);
@@ -181,5 +207,13 @@ public class AccountController {
                 return;
             }
         }
+    }
+
+    public  static boolean checkIDAccountIsExist(int idAccount){
+        if (idAccount>=0&&idAccount<listPlayer.size()+1) return true;
+        else return false;
+    }
+    public int sizeList(){
+        return listPlayer.size();
     }
 }

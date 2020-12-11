@@ -54,19 +54,23 @@ public class DisplayConsole {
         System.out.println(ENUM_STATIC.getSTRING_LINE_Account());
     }
     public void displayPlayer(Player player,Account account){
+        InputConsole.clearConsole();
         System.out.println(ENUM_STATIC.getSTRING_LINE_Player());
         System.out.printf("IDPlayer  |");
         System.out.printf("\t\tUserName         |");
         System.out.printf("\tAddress   |");
         System.out.printf("\t PointGame|");
+        System.out.printf("\t Account name |");
+        System.out.printf("Account password| ");
         System.out.println();
         System.out.println(ENUM_STATIC.getSTRING_LINE_Player());
             System.out.printf("%-10d|  ", player.getIdPlayer());
             System.out.printf("%-20s|  ", player.getNamePlayer());
             System.out.printf("%-10s|   ", player.getAddress());
             System.out.printf("%-8s|   ", player.getPointGame());
+            System.out.printf("%-12s|   ", account.getUserName());
+            System.out.printf("%-13s|   ", account.getPassword());
             System.out.println();
-
         System.out.println(ENUM_STATIC.getSTRING_LINE_Player());
     }
 }
