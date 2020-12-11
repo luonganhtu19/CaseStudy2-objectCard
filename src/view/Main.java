@@ -14,11 +14,12 @@ public class Main {
     private static AccountController accountController= new AccountController();
     private static DisplayConsole displayConsole=new DisplayConsole();
     public static void main(String[] args)throws IOException {
-        accountController=new AccountController();
-        Account account=new Account();
+
         boolean check =true;
         while (check){
             menuMain();
+            accountController=new AccountController();
+            Account account=new Account();
             int choice=InputConsole.getIntValue("Choice program: ");
             switch (choice){
                 case 0:
@@ -62,6 +63,7 @@ public class Main {
         switch (choice){
             case 0:
                 displayConsole.displayAfterChoice("\t\t bye bye "+account.getUserName());
+                account=new Account();
                 return;
             case 1:
                 Player player=new Player();
