@@ -13,7 +13,9 @@ public final class   ENUM_STATIC {
     private final static String NEW_LINE_SEPARATOR="\n";
     private final static String STRING_HEADER_Account="IDAccount,UserName,Password,State";
     private final static String STRING_HEADER_Player="IdPlayer,NamePlayer,Address,PointGame,IdAccount";
-    private final static String STRING_LINE="----------------------------------------------------";
+    private final static String STRING_LINE_Account="--------------------------------------------------------------------------------------------------------";
+    private final static String STRING_LINE= "---------------------------------------------";
+    private final static String STRING_LINE_Player="-----------------------------------------------------------";
 
 
     public static Scanner getINPUT() {
@@ -47,6 +49,14 @@ public final class   ENUM_STATIC {
 
     public static String getSTRING_HEADER_Player() {
         return STRING_HEADER_Player;
+    }
+
+    public static String getSTRING_LINE_Account() {
+        return STRING_LINE_Account;
+    }
+
+    public static String getSTRING_LINE_Player() {
+        return STRING_LINE_Player;
     }
 }
 

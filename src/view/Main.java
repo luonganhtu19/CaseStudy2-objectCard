@@ -16,7 +16,8 @@ public class Main {
     public static void main(String[] args)throws IOException {
         accountController=new AccountController();
         Account account=new Account();
-        while (true){
+        boolean check =true;
+        while (check){
             menuMain();
             int choice=InputConsole.getIntValue("Choice program: ");
             switch (choice){
@@ -27,13 +28,12 @@ public class Main {
                     return;
                 case 1:
                     Player player=accountController.login(account);
-                    if(account.getIdAccount()==1) menuAdmin( account);
+                    if(account.getIdAccount()==1) menuAdmin(account);
                     else menuPlayer(player,account);
                     break;
                 default:
                     System.out.println("please try again ");
             }
-            menuMain();
         }
     }
     private static void menuMain(){
@@ -60,7 +60,7 @@ public class Main {
                 displayConsole.displayAfterChoice("\t\t bye bye "+account.getUserName());
                 return;
             case 1:
-                Player player=Player.getInstance();
+                Player player=new Player();
                 accountController.createAccount(player);
                 break;
             case 2:
@@ -84,6 +84,9 @@ public class Main {
         System.out.println("1. Reset nameAccount");
         System.out.println("2. Reset PassWord");
         System.out.println("3. Reset State");
+        System.out.println("4. Edit name of player");
+        System.out.println("5. Edit address of player");
+        System.out.println("6. Edit point of player");
         System.out.println("0. Exit ");
         int choice=InputConsole.getIntValue("Choice program: ");
         switch (choice){
@@ -99,6 +102,15 @@ public class Main {
             case 3:
                 accountController.editState(IdAccount);
                 break;
+            case 4:
+                accountController.editNamePlayer(IdAccount);
+                break;
+            case 5:
+                accountController.editAddressPlayer(IdAccount);
+                break;
+            case 6:
+                accountController.editPointPlayer(IdAccount);
+                break;
             default:
                 System.out.println(" Please choice program again");
                 editAccount(IdAccount);
@@ -106,24 +118,28 @@ public class Main {
     }
 
     private static void menuPlayer(Player player, Account account){
-        displayConsole.displayAfterChoice(" Welcome "+ player.getNamePlayer());
         System.out.println("Menu game: ");
         System.out.println("1. Display profile");
         System.out.println("2. Edit profile");
-        System.out.println("0. Exit");
+        System.out.println("0. Logout");
 
         int choice=InputConsole.getIntValue(" Choice program: ");
         switch (choice){
             case 0:
-                break;
+                displayConsole.displayAfterChoice("bye bye ");
+                return;
             case 1:
-                displayConsole.displayPlayer(player,account);
+                accountController.infoPlayer(account);
                 break;
             case 2:
+                editPlayer();
                 break;
             default:
                 System.out.println("Please choice again ");
         }
         menuPlayer(player,account);
+    }
+    private static void editPlayer(){
+
     }
 }

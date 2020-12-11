@@ -7,12 +7,13 @@ public class Player {
     private int pointGame;
     private int idAccount;
 
-    private Player(){};
-    public static Player getInstance(){
-        return PlayerHelper.INSTANCE;
-    }
-    private static class PlayerHelper{
-        private static  final Player INSTANCE=new Player();
+    public Player(){};
+    public Player(int idPlayer,String namePlayer,String address,int pointGame,int idAccount){
+        this.idPlayer=idPlayer;
+        this.namePlayer=namePlayer;
+        this.address=address;
+        this.pointGame=pointGame;
+        this.idAccount=idAccount;
     }
 
     public int getIdPlayer() {
@@ -53,5 +54,10 @@ public class Player {
 
     public void setIdAccount(int idAccount) {
         this.idAccount = idAccount;
+    }
+
+    @Override
+    public String toString() {
+        return ""+ idPlayer + "," + namePlayer  + "," + address + "," + pointGame + "," + idAccount ;
     }
 }

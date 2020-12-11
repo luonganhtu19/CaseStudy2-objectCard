@@ -20,6 +20,7 @@ public class AccountController {
     static {
         try {
             listAccount = ioFile.readeFileAccount(path, listAccount);
+            listPlayer=ioFile.readeFilePlayer(pathPlayer,listPlayer);
         } catch (IOException e) {
             System.out.println("no exist file");
         }
@@ -36,9 +37,7 @@ public class AccountController {
         boolean check = checkAccountExist(accountUser);
         if (check) {
             displayConsole.displayAfterChoice("\t\t\t Welcome " + accountName);
-            Player player = Player.getInstance();
-
-
+            Player player = new Player();
             return player;
         } else {
             displayConsole.displayAfterChoice("\t Password or Username is wrong");
@@ -117,10 +116,15 @@ public class AccountController {
         else {
             int length = listAccount.size();
             listAccount.remove(idAccount - 1);
+            listPlayer.remove(idAccount-1);
             for (int i = idAccount - 1; i < length - 1; i++) {
                 Account objAccount = (Account) listAccount.get(i);
-                objAccount.setIdAccount(i + 1);
+                Player objPlayer=(Player) listPlayer.get(i);
+                objAccount.setIdAccount(i+1);
+                objPlayer.setIdAccount(i+1);
+                objPlayer.setIdPlayer(i+1);
             }
+            ioFile.writerFile(pathPlayer,listPlayer,ENUM_STATIC.getSTRING_HEADER_Player());
             ioFile.writerFile(path, listAccount, ENUM_STATIC.getSTRING_HEADER_Account());
             displayConsole.displayAfterChoice(" \t Delete account is success! ");
         }
@@ -159,11 +163,23 @@ public class AccountController {
         displayConsole.displayAfterChoice("Reset state account success");
     }
 
+    public void editNamePlayer(int idAccount){}
+
+    public void editAddressPlayer(int idAccount){}
+
+    public void editPointPlayer(int idAccount){}
+
     public void displayAllAccount() throws IOException {
-        displayConsole.displayAllAccount(listAccount);
+        displayConsole.displayAllAccount(listAccount,listPlayer);
     }
 
-    private void infoPlayer(Account account){
-
+    public void infoPlayer(Account account){
+        for(Object obj: listPlayer){
+            Player player=(Player) obj;
+            if(player.getIdAccount()==account.getIdAccount()){
+                displayConsole.displayPlayer(player,account);
+                return;
+            }
+        }
     }
 }

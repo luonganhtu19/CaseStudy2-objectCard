@@ -3,6 +3,7 @@ package controller;
 import com.sun.xml.internal.ws.api.message.Header;
 import model.Account;
 import model.ENUM_STATIC;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,26 @@ public class IOFile {
             if (splitData[0].equals("IDAccount")) continue;
             Account object = new Account(Integer.parseInt(splitData[0]), splitData[1], splitData[2], splitData[3]);
             list.add(object);
+        }
+        fileReader.close();
+        bufferedReader.close();
+        return list;
+    }
+    public ArrayList<Object> readeFilePlayer(String path, ArrayList<Object> list) throws IOException {
+        File file = new File(path);
+        if (!file.exists()) {
+            System.out.println("File not found");
+            return null;
+        }
+        fileReader = new FileReader(file);
+        bufferedReader = new BufferedReader(fileReader);
+        String line;
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] splitData = line.split(ENUM_STATIC.getCommaDelimiter());
+            if (splitData[0].equals("IdPlayer")) continue;
+            Player player = new Player(Integer.parseInt(splitData[0]),splitData[1],splitData[2],Integer.parseInt(splitData[3]),Integer.parseInt(splitData[4]));
+            list.add(player);
         }
         fileReader.close();
         bufferedReader.close();
