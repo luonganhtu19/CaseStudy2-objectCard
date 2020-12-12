@@ -138,7 +138,7 @@ public class AccountController {
         }
     }
 
-    public void editNameAccount(int indexAccount) throws IOException {
+    public void editNameAccount(Account account) throws IOException {
         String nameAccount = "";
         boolean check = true;
         do {
@@ -149,17 +149,18 @@ public class AccountController {
             }
             check = false;
         } while (check);
-        if (indexAccount==0) System.out.println("admin not name change");
-        Account objAccount = (Account) listAccount.get(indexAccount);
+        if ((account.getIdAccount()-1)==0) System.out.println("admin not name change");
+        Account objAccount = (Account) listAccount.get(account.getIdAccount()-1);
         objAccount.setUserName(nameAccount);
+
         ioFile.writerFile(path, listAccount, ENUM_STATIC.getSTRING_HEADER_Account());
         displayConsole.displayAfterChoice("Change name account success");
 
     }
 
-    public void editPassAccount(int indexAccount) throws IOException {
+    public void editPassAccount(Account account) throws IOException {
         String passwordNew = InputConsole.getStringValue("Input new password: ");
-        Account objAccount = (Account) listAccount.get(indexAccount);
+        Account objAccount = (Account) listAccount.get(account.getIdAccount()-1);
         objAccount.setPassword(passwordNew);
         ioFile.writerFile(path, listAccount, ENUM_STATIC.getSTRING_HEADER_Account());
         displayConsole.displayAfterChoice("Reset password account success");
@@ -199,6 +200,12 @@ public class AccountController {
         ioFile.writerFile(pathPlayer,listPlayer,ENUM_STATIC.getSTRING_HEADER_Player());
         displayConsole.displayAfterChoice("Change name success");
     }
+    public void updatePointPlayer(int indexAccount,int point) throws IOException {
+        Player player=(Player) listPlayer.get(indexAccount);
+        player.setPointGame(player.getPointGame()+point);
+        ioFile.writerFile(pathPlayer,listPlayer,ENUM_STATIC.getSTRING_HEADER_Player());
+        displayConsole.displayAfterChoice("Change name success");
+    }
 
     public void displayAllAccount() throws IOException {
         displayConsole.displayAllAccount(listAccount,listPlayer);
@@ -220,5 +227,8 @@ public class AccountController {
     }
     public int sizeList(){
         return listPlayer.size();
+    }
+    public Account getAccount(int idAccount){
+        return (Account) listAccount.get(idAccount);
     }
 }

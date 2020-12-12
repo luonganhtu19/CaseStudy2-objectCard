@@ -1,6 +1,7 @@
 package view;
 
 import controller.AccountController;
+import controller.ControllerGame;
 import controller.IOFile;
 import controller.InputConsole;
 import model.Account;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class Main {
     private static AccountController accountController= new AccountController();
     private static DisplayConsole displayConsole=new DisplayConsole();
+
     public static void main(String[] args)throws IOException {
 
         boolean check =true;
@@ -58,7 +60,6 @@ public class Main {
         System.out.println("4. Display Account");
         System.out.println("0. Log out");
         System.out.println("");
-
         int choice=InputConsole.getIntValue("Choice program: ");
         switch (choice){
             case 0:
@@ -84,7 +85,7 @@ public class Main {
                     }
                     check=false;
                 }
-                editAccount(IdAccount);
+                editAccount(accountController.getAccount(IdAccount));
                 break;
             case 4:
                 accountController.displayAllAccount();
@@ -94,7 +95,7 @@ public class Main {
         }
         menuAdmin(account);
     }
-    private static void editAccount(int IdAccount) throws IOException {
+    private static void editAccount(Account account) throws IOException {
         System.out.println("Edit account: ");
         System.out.println("1. Reset nameAccount");
         System.out.println("2. Reset PassWord");
@@ -109,34 +110,35 @@ public class Main {
                 displayConsole.displayAfterChoice("\t\t Menu for admin ");
                 return;
             case 1:
-                accountController.editNameAccount(IdAccount);
+                accountController.editNameAccount(account);
                 break;
             case 2:
-                accountController.editPassAccount(IdAccount);
+                accountController.editPassAccount(account);
                 break;
             case 3:
-                accountController.editState(IdAccount);
+                accountController.editState(account.getIdAccount());
                 break;
             case 4:
-                accountController.editNamePlayer(IdAccount);
+                accountController.editNamePlayer(account.getIdAccount());
                 break;
             case 5:
-                accountController.editAddressPlayer(IdAccount);
+                accountController.editAddressPlayer(account.getIdAccount());
                 break;
             case 6:
-                accountController.editPointPlayer(IdAccount);
+                accountController.editPointPlayer(account.getIdAccount());
                 break;
             default:
                 System.out.println(" Please choice program again");
-                editAccount(IdAccount);
+                editAccount(account);
         }
-        editAccount(IdAccount);
+        editAccount(account);
     }
 
     private static void menuPlayer(Player player, Account account) throws IOException {
         System.out.println("Menu game: ");
         System.out.println("1. Display profile");
         System.out.println("2. Edit profile");
+        System.out.println("3. PlayGame");
         System.out.println("0. Logout");
 
         int choice=InputConsole.getIntValue(" Choice program: ");
@@ -149,6 +151,16 @@ public class Main {
                 break;
             case 2:
                 editPlayer(player,account);
+                break;
+            case 3:
+                ControllerGame controllerGame=new ControllerGame();
+                displayConsole.displayGame();
+                controllerGame.prepareGame(account.getIdAccount());
+                int idWin=controllerGame.playGame(account);
+                if (idWin==1) accountController.updatePointPlayer(account.getIdAccount()-1,3);
+                else if (idWin==-2) accountController.updatePointPlayer(account.getIdAccount()-1,1);
+                controllerGame.checkWin(idWin);
+                controllerGame.saveHistoryMatch(idWin);
                 break;
             default:
                 System.out.println("");
@@ -177,11 +189,11 @@ public class Main {
                 accountController.editAddressPlayer(indexAccount);
                 break;
             case 3:
-                accountController.editNameAccount(indexAccount);
+                accountController.editNameAccount(account);
                 displayConsole.displayAfterChoice("Please try again login");
                 return;
             case 4:
-                accountController.editPassAccount(indexAccount);
+                accountController.editPassAccount(account);
                 displayConsole.displayAfterChoice("Please try again login");
                 break;
             default:
